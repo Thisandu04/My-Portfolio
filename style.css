@@ -880,6 +880,15 @@ body.dark .badge-meta .badge-id {
   gap: 0.5rem;
 }
 
+  /* OpenAI icon fix - invert in light mode so it's visible */
+.devicon-openai-plain {
+  filter: invert(0);
+}
+
+body.dark .devicon-openai-plain {
+  filter: invert(1);
+}
+
 .skill-item span {
   font-weight: 600;
 }
