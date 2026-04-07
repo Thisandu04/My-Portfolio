@@ -889,6 +889,13 @@ body.dark .devicon-openai-plain {
   filter: invert(1);
 }
 
+
+body.dark .devicon-googlecloud-plain,
+body.dark .devicon-amazonwebservices-plain-wordmark {
+  filter: invert(1);
+}
+
+
 .skill-item span {
   font-weight: 600;
 }
