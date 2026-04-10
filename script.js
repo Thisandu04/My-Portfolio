@@ -50,9 +50,24 @@ document.querySelectorAll('.section').forEach(section => {
   observer.observe(section);
 });
 
-// Add fade-in class to CSS for animation
-// (This would be in style.css: .fade-in { opacity: 1; transform: translateY(0); transition: opacity 0.6s, transform 0.6s; })
-// Initially set opacity: 0; transform: translateY(20px); on .section
+// ── Skill items: staggered pop-in on scroll ──
+const skillObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const items = entry.target.querySelectorAll('.skill-item');
+      items.forEach((item, i) => {
+        setTimeout(() => {
+          item.classList.add('skill-visible');
+        }, i * 60); // 60ms stagger between each icon
+      });
+      skillObserver.unobserve(entry.target); // fire only once
+    }
+  });
+}, { threshold: 0.15 });
+
+const skillsGrid = document.querySelector('.skills-grid');
+if (skillsGrid) skillObserver.observe(skillsGrid);
+
 
 // Scroll up arrow functionality
 const scrollUpBtn = document.getElementById('scrollUp');
