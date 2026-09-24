@@ -17,6 +17,14 @@ body {
   transition: background-color 0.3s, color 0.3s;
 }
 
+h1, h2, h3, h4,
+.brand,
+.section-label,
+.eyebrow {
+  font-family: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  letter-spacing: -0.01em;
+}
+
 body.dark {
   color: #e0e0e0;
   background-color: #1a1a1a;
