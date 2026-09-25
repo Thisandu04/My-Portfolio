@@ -9,11 +9,42 @@ html {
   scroll-behavior: smooth;
 }
 
+:root {
+  /* Brand */
+  --color-primary: #007acc;
+  --gradient-start: #667eea;
+  --gradient-end: #764ba2;
+  --gradient-primary: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+
+  /* Text */
+  --text-primary: #333;
+  --text-secondary: #666;
+
+  /* Surfaces */
+  --bg-body: #fff;
+  --bg-surface: #f8f9fa;
+  --bg-surface-alt: #e9ecef;
+
+  /* Borders */
+  --border-color: #dee2e6;
+  --border-color-soft: #eee;
+}
+
+body.dark {
+  --text-primary: #e0e0e0;
+  --text-secondary: #ccc;
+  --bg-body: #1a1a1a;
+  --bg-surface: #2a2a2a;
+  --bg-surface-alt: #3a3a3a;
+  --border-color: #444;
+  --border-color-soft: #444;
+}
+
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.6;
-  color: #333;
-  background-color: #fff;
+  color: var(--text-primary);
+  background-color: var(--bg-body);
   transition: background-color 0.3s, color 0.3s;
 }
 
@@ -26,8 +57,8 @@ h1, h2, h3, h4,
 }
 
 body.dark {
-  color: #e0e0e0;
-  background-color: #1a1a1a;
+  color: var(--text-primary);
+  background-color: var(--bg-body);
 }
 
 /* Container */
@@ -62,7 +93,7 @@ body.dark .site-header {
 .brand {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #007acc;
+  color: var(--color-primary);
   text-decoration: none;
 }
 
@@ -83,7 +114,7 @@ body.dark .nav-menu a {
 }
 
 .nav-menu a:hover {
-  color: #007acc;
+  color: var(--color-primary);
 }
 
 .header-actions {
@@ -119,7 +150,7 @@ body.dark .nav-menu a {
   display: block;
   font-size: 18px;
   font-weight: 600;
-  color: #007acc;
+  color: var(--color-primary);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin-bottom: 0.5rem;
@@ -133,7 +164,7 @@ body.dark .nav-menu a {
 
 /* Hero */
 .hero {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--gradient-primary);
   color: white;
   padding: 100px;
 }
@@ -192,7 +223,7 @@ body.dark .nav-menu a {
 }
 
 .btn.primary {
-  background-color: #007acc;
+  background-color: var(--color-primary);
   color: white;
 }
 
@@ -208,7 +239,7 @@ body.dark .nav-menu a {
 
 .btn.secondary:hover {
   background-color: white;
-  color: #007acc;
+  color: var(--color-primary);
 }
 
 .btn.large {
@@ -275,8 +306,8 @@ body.dark .nav-menu a {
   border-radius: 50%;
   object-fit: cover;
   border: 6px solid transparent;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) padding-box,
-              linear-gradient(135deg, #667eea 0%, #764ba2 100%) border-box;
+  background: var(--gradient-primary) padding-box,
+              var(--gradient-primary) border-box;
   box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4),
               0 5px 15px rgba(0, 0, 0, 0.1);
   transition: all 0.4s ease;
@@ -297,7 +328,7 @@ body.dark .nav-menu a {
   right: -8px;
   bottom: -8px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--gradient-primary);
   z-index: -1;
   opacity: 0.3;
   animation: pulse 3s infinite;
@@ -334,7 +365,7 @@ body.dark .nav-menu a {
   content: '→';
   position: absolute;
   left: 0;
-  color: #007acc;
+  color: var(--color-primary);
 }
 
 .about-cards {
@@ -343,7 +374,7 @@ body.dark .nav-menu a {
 }
 
 .info-card {
-  background-color: #f8f9fa;
+  background-color: var(--bg-surface);
   padding: 1.5rem;
   border-radius: 0.5rem;
   transition: transform 0.3s;
@@ -375,7 +406,7 @@ body.dark .info-card {
   top: 0;
   bottom: 0;
   width: 2px;
-  background-color: #007acc;
+  background-color: var(--color-primary);
 }
 
 .timeline-item {
@@ -392,14 +423,14 @@ body.dark .info-card {
   top: 0.5rem;
   width: 1rem;
   height: 1rem;
-  background-color: #007acc;
+  background-color: var(--color-primary);
   border-radius: 50%;
 }
 
 .timeline-date {
   display: block;
   font-size: 0.875rem;
-  color: #007acc;
+  color: var(--color-primary);
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
@@ -411,7 +442,7 @@ body.dark .info-card {
 
 .score-badge {
   display: inline-block;
-  background-color: #007acc;
+  background-color: var(--color-primary);
   color: white;
   padding: 0.35rem 0.75rem;
   border-radius: 999px;
@@ -429,7 +460,7 @@ body.dark .info-card {
 }
 
 .project-card {
-  background-color: #f8f9fa;
+  background-color: var(--bg-surface);
   padding: 2rem;
   border-radius: 0.5rem;
   transition: transform 0.3s;
@@ -471,7 +502,7 @@ body.dark .project-card {
   content: '•';
   position: absolute;
   left: 0;
-  color: #007acc;
+  color: var(--color-primary);
 }
 
 .btn.secondary.small {
@@ -508,7 +539,7 @@ body.dark .project-card {
 }
 
 .blog-card {
-  background-color: #f8f9fa;
+  background-color: var(--bg-surface);
   padding: 2rem;
   border-radius: 0.5rem;
   transition: transform 0.3s;
@@ -533,7 +564,7 @@ body.dark .blog-card {
 }
 
 .blog-card a:hover h3 {
-  color: #007acc;
+  color: var(--color-primary);
 }
 
 .blog-thumb {
@@ -570,7 +601,7 @@ body.dark .blog-card {
 .section-intro {
   text-align: center;
   font-size: 1.125rem;
-  color: #666;
+  color: var(--text-secondary);
   margin-bottom: 3rem;
   max-width: 600px;
   margin-left: auto;
@@ -610,11 +641,11 @@ body.dark .badges-subsection h3 {
 
 .certificate-card,
 .badge-card {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background: linear-gradient(135deg, var(--bg-surface) 0%, #e9ecef 100%);
   border-radius: 0.75rem;
   overflow: hidden;
   transition: all 0.3s ease;
-  border: 1px solid #dee2e6;
+  border: 1px solid 	var(--border-color);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
@@ -641,7 +672,7 @@ body.dark .badge-card:hover {
   height: 220px;
   overflow: hidden;
   position: relative;
-  background: #f8f9fa;
+  background: var(--bg-surface);
 }
 
 body.dark .certificate-image {
@@ -681,7 +712,7 @@ body.dark .certificate-details h4 {
   align-items: center;
   margin-bottom: 0.5rem;
   font-size: 0.7rem;
-  color: #666;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
@@ -690,7 +721,7 @@ body.dark .certificate-info {
 }
 
 .certificate-info .issuer {
-  color: #007bff;
+  color: var(--color-primary);
   font-weight: 600;
 }
 
@@ -700,7 +731,7 @@ body.dark .certificate-info .issuer {
 
 .certificate-details p {
   font-size: 0.75rem;
-  color: #666;
+  color: var(--text-secondary);
   line-height: 1.4;
   margin-bottom: 0.75rem;
 }
@@ -712,7 +743,7 @@ body.dark .certificate-details p {
 .view-cert-btn {
   display: inline-block;
   padding: 0.35rem 0.75rem;
-  background: linear-gradient(135deg, #007bff, #0056b3);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary));
   color: white;
   text-decoration: none;
   border-radius: 0.375rem;
@@ -726,7 +757,7 @@ body.dark .certificate-details p {
 }
 
 .view-cert-btn:hover {
-  background: linear-gradient(135deg, #0056b3, #004085);
+  background: linear-gradient(135deg, var(--color-primary), #005a99);
   transform: translateY(-1px);
   box-shadow: 0 3px 8px rgba(0, 123, 255, 0.3);
 }
@@ -780,7 +811,7 @@ body.dark .badge-details h4 {
   align-items: center;
   margin-bottom: 0.5rem;
   font-size: 0.7rem;
-  color: #666;
+  color: var(--text-secondary);
   font-weight: 500;
 }
 
@@ -823,7 +854,7 @@ body.dark .badge-info .platform {
 
 .badge-details p {
   font-size: 0.75rem;
-  color: #666;
+  color: var(--text-secondary);
   line-height: 1.4;
   margin-bottom: 0.75rem;
   text-align: center;
@@ -840,7 +871,7 @@ body.dark .badge-details p {
   font-size: 0.65rem;
   color: #888;
   font-weight: 500;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--border-color-soft);
   padding-top: 0.5rem;
 }
 
@@ -862,7 +893,7 @@ body.dark .badge-meta {
 
 .badge-meta .badge-id {
   font-family: 'Courier New', monospace;
-  background: #f8f9fa;
+  background: var(--bg-surface);
   padding: 0.2rem 0.4rem;
   border-radius: 0.25rem;
   font-size: 0.6rem;
@@ -972,7 +1003,7 @@ body.dark .skill-item:hover {
 }
 
 .skill-item:hover span {
-  color: #007acc;
+  color: var(--color-primary);
 }
 
 body.dark .skill-item:hover span {
@@ -1006,7 +1037,7 @@ body.dark .devicon-github-original {
 
 /* Contact */
 .section.contact {
-  background: linear-gradient(135deg, #2b4de7 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #2b4de7 0%, var(--gradient-end) 100%);
   color: white;
   position: relative;
   overflow: hidden;
@@ -1124,7 +1155,7 @@ body.dark .form-group textarea {
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: 	var(--gradient-start);
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
   background-color: #ffffff;
 }
@@ -1132,7 +1163,7 @@ body.dark .form-group textarea {
 body.dark .form-group input:focus,
 body.dark .form-group textarea:focus {
   background-color: #4a5568;
-  border-color: #667eea;
+  border-color: 	var(--gradient-start);
 }
 
 .form-group textarea {
@@ -1143,7 +1174,7 @@ body.dark .form-group textarea:focus {
 
 .contact-form .btn {
   align-self: flex-start;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--gradient-primary);
   border: none;
   color: white;
   font-weight: 600;
@@ -1180,7 +1211,7 @@ body.dark .form-group textarea:focus {
   justify-content: center;
   width: 60px;
   height: 60px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--gradient-primary);
   border-radius: 50%;
   color: white;
   text-decoration: none;
@@ -1235,7 +1266,7 @@ body.dark .form-group textarea:focus {
   justify-content: center;
   width: 50px;
   height: 50px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--gradient-primary);
   border-radius: 50%;
   color: white;
   text-decoration: none;
@@ -1258,7 +1289,7 @@ body.dark .form-group textarea:focus {
 
 /* Footer */
 .site-footer {
-  background-color: #f8f9fa;
+  background-color: var(--bg-surface);
   padding: 2rem 0;
   text-align: center;
 }
@@ -1279,7 +1310,7 @@ body.dark .site-footer {
 }
 
 .social-badge {
-  background-color: #f8f9fa;
+  background-color: var(--bg-surface);
   color: #333;
   padding: 0.5rem 1rem;
   border-radius: 2rem;
@@ -1297,7 +1328,7 @@ body.dark .social-badge {
 }
 
 .social-badge:hover {
-  background-color: #007acc;
+  background-color: var(--color-primary);
   color: white;
   transform: translateY(-2px);
 }
