@@ -167,9 +167,39 @@ body.dark .nav-menu a {
   background: var(--gradient-primary);
   color: white;
   padding: 100px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before,
+.hero::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero::before {
+  width: 420px;
+  height: 420px;
+  background: rgba(255, 255, 255, 0.25);
+  top: -120px;
+  right: -80px;
+}
+
+.hero::after {
+  width: 380px;
+  height: 380px;
+  background: rgba(43, 77, 231, 0.35);
+  bottom: -140px;
+  left: -100px;
 }
 
 .hero-grid {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
@@ -271,6 +301,18 @@ body.dark .nav-menu a {
 
 .stats-grid div {
   text-align: center;
+  padding: 1rem 0.75rem;
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.stats-grid div:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.18);
 }
 
 .stats-grid strong {
