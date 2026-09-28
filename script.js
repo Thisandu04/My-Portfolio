@@ -146,3 +146,95 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
   tick();
 })();
+
+// Hero particle network
+(function () {
+  const canvas = document.getElementById('heroCanvas');
+  if (!canvas) return;
+
+  const hero = canvas.parentElement;
+  const ctx = canvas.getContext('2d');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const LINK_DIST = 120;
+
+  let w = 0, h = 0, particles = [], rafId = null, running = false;
+
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = hero.clientWidth;
+    h = hero.clientHeight;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const count = Math.min(70, Math.floor((w * h) / 16000));
+    particles = Array.from({ length: count }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
+      r: Math.random() * 1.5 + 1
+    }));
+    draw(); // draw one frame so reduced-motion users still see the pattern
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+      ctx.fill();
+
+      for (let j = i + 1; j < particles.length; j++) {
+        const q = particles[j];
+        const dx = p.x - q.x;
+        const dy = p.y - q.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < LINK_DIST) {
+          ctx.strokeStyle = `rgba(255, 255, 255, ${0.25 * (1 - dist / LINK_DIST)})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(q.x, q.y);
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function update() {
+    for (const p of particles) {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0 || p.x > w) p.vx *= -1;
+      if (p.y < 0 || p.y > h) p.vy *= -1;
+    }
+  }
+
+  function loop() {
+    update();
+    draw();
+    rafId = requestAnimationFrame(loop);
+  }
+
+  function start() {
+    if (running || reduceMotion) return;
+    running = true;
+    loop();
+  }
+
+  function stop() {
+    running = false;
+    cancelAnimationFrame(rafId);
+  }
+
+  // Keep the canvas sized to the hero (also fires once on load)
+  new ResizeObserver(resize).observe(hero);
+
+  // Only animate while the hero is on screen (saves battery once you scroll past)
+  new IntersectionObserver(([entry]) => {
+    entry.isIntersecting ? start() : stop();
+  }).observe(hero);
+})();
