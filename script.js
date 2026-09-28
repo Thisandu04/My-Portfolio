@@ -97,3 +97,52 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
+
+// Hero typewriter effect
+(function () {
+  const el = document.getElementById('typedText');
+  if (!el) return;
+
+  const roles = ['AI/ML Enthusiast', 'Data Science Explorer', 'Web Developer'];
+  const TYPE_SPEED = 80;    // ms per character typed
+  const DELETE_SPEED = 45;  // ms per character deleted
+  const HOLD = 1600;        // pause after a role is fully typed
+  const GAP = 400;          // pause before typing the next role
+
+  // Respect users who prefer reduced motion: show one static role
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    el.textContent = roles[0];
+    return;
+  }
+
+  let roleIndex = 0;
+  let charIndex = 0;
+  let deleting = false;
+
+  el.textContent = '';
+
+  function tick() {
+    const current = roles[roleIndex];
+
+    if (!deleting) {
+      charIndex++;
+      el.textContent = current.slice(0, charIndex);
+      if (charIndex === current.length) {
+        deleting = true;
+        return setTimeout(tick, HOLD);
+      }
+      return setTimeout(tick, TYPE_SPEED);
+    }
+
+    charIndex--;
+    el.textContent = current.slice(0, charIndex);
+    if (charIndex === 0) {
+      deleting = false;
+      roleIndex = (roleIndex + 1) % roles.length;
+      return setTimeout(tick, GAP);
+    }
+    setTimeout(tick, DELETE_SPEED);
+  }
+
+  tick();
+})();
