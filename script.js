@@ -332,3 +332,20 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     btn.addEventListener('mouseleave', reset);
   });
 })();
+
+// Scroll progress bar
+(function () {
+  const bar = document.querySelector('.scroll-progress-bar');
+  if (!bar) return;
+
+  function updateProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    bar.style.width = `${pct}%`;
+  }
+
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  window.addEventListener('resize', updateProgress);
+  updateProgress(); // set correct value on load (e.g. if page opens mid-scroll)
+})();
