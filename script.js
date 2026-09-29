@@ -349,3 +349,36 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   window.addEventListener('resize', updateProgress);
   updateProgress(); // set correct value on load (e.g. if page opens mid-scroll)
 })();
+
+// Scrollspy — highlight the current section's nav link
+(function () {
+  const navLinks = document.querySelectorAll('.nav-menu a[href^="#"]');
+  if (!navLinks.length) return;
+
+  const sections = Array.from(navLinks)
+    .map((link) => document.getElementById(link.getAttribute('href').slice(1)))
+    .filter(Boolean);
+
+  const linkFor = (id) => document.querySelector(`.nav-menu a[href="#${id}"]`);
+
+  const spyObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const link = linkFor(entry.target.id);
+        if (!link) return;
+        if (entry.isIntersecting) {
+          navLinks.forEach((l) => l.classList.remove('active'));
+          link.classList.add('active');
+        }
+      });
+    },
+    {
+      // Counts a section "current" once it's crossed the header and
+      // reached roughly the upper-middle of the viewport
+      rootMargin: '-45% 0px -50% 0px',
+      threshold: 0,
+    }
+  );
+
+  sections.forEach((section) => spyObserver.observe(section));
+})();
