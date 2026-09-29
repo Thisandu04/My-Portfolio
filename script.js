@@ -238,3 +238,41 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     entry.isIntersecting ? start() : stop();
   }).observe(hero);
 })();
+
+// 3D tilt effect for project & certificate cards
+(function () {
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!canHover || reduceMotion) return; // skip touch devices and reduced-motion users
+
+  const MAX_TILT = 8; // degrees, raise for a stronger effect
+
+  document.querySelectorAll('.project-card, .certificate-card').forEach((card) => {
+    card.classList.add('tilt');
+    let raf = null;
+
+    card.addEventListener('mousemove', (e) => {
+      if (raf) return; // one update per frame
+      const { clientX, clientY } = e;
+
+      raf = requestAnimationFrame(() => {
+        const rect = card.getBoundingClientRect();
+        const x = (clientX - rect.left) / rect.width;  // 0 to 1
+        const y = (clientY - rect.top) / rect.height;  // 0 to 1
+
+        card.style.setProperty('--ry', `${(x - 0.5) * 2 * MAX_TILT}deg`);
+        card.style.setProperty('--rx', `${(0.5 - y) * 2 * MAX_TILT}deg`);
+        card.style.setProperty('--mx', `${x * 100}%`);
+        card.style.setProperty('--my', `${y * 100}%`);
+        raf = null;
+      });
+    });
+
+    card.addEventListener('mouseleave', () => {
+      cancelAnimationFrame(raf);
+      raf = null;
+      card.style.setProperty('--rx', '0deg');
+      card.style.setProperty('--ry', '0deg');
+    });
+  });
+})();
