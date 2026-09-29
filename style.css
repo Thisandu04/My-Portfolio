@@ -79,6 +79,24 @@ body.dark {
   transition: background-color 0.3s;
 }
 
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: transparent;
+  z-index: 200; /* above .site-header's 100 */
+  pointer-events: none;
+}
+
+.scroll-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--gradient-primary);
+  transition: width 0.1s linear;
+}
+
 body.dark .site-header {
   background-color: rgba(26, 26, 26, 0.95);
 }
