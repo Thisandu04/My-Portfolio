@@ -307,6 +307,32 @@ body.dark .nav-menu a {
   font-size: 1.125rem;
 }
 
+.btn.magnetic {
+  display: inline-block;
+  will-change: transform;
+}
+
+.btn.magnetic .btn-text {
+  display: inline-block;
+  will-change: transform;
+}
+
+.btn.magnetic,
+.btn.magnetic .btn-text {
+  transition: transform 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* while the mouse is actively moving over it, snap fast instead of easing */
+.btn.magnetic.is-tracking,
+.btn.magnetic.is-tracking .btn-text {
+  transition: transform 0.08s linear;
+}
+
+/* press feedback on click */
+.btn.magnetic:active {
+  transform: scale(0.94) !important;
+}
+
 .hero-card {
   background-color: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);

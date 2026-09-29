@@ -276,3 +276,59 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
   });
 })();
+
+// Magnetic buttons
+(function () {
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!canHover || reduceMotion) return;
+
+  const RADIUS = 80;       // px — how far from the button the pull starts
+  const STRENGTH = 0.4;    // 0–1 — how far the button itself moves
+  const TEXT_STRENGTH = 0.6; // text moves a bit more than the button
+
+  document.querySelectorAll('.btn.magnetic').forEach((btn) => {
+    const text = btn.querySelector('.btn-text');
+    let raf = null;
+
+    function onMove(e) {
+      const rect = btn.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      const dist = Math.hypot(dx, dy);
+
+      if (dist > RADIUS) {
+        reset();
+        return;
+      }
+
+      btn.classList.add('is-tracking');
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        btn.style.transform = `translate(${dx * STRENGTH}px, ${dy * STRENGTH}px)`;
+        if (text) text.style.transform = `translate(${dx * TEXT_STRENGTH}px, ${dy * TEXT_STRENGTH}px)`;
+        raf = null;
+      });
+    }
+
+    function reset() {
+      btn.classList.remove('is-tracking');
+      btn.style.transform = '';
+      if (text) text.style.transform = '';
+    }
+
+    // Track the cursor over a slightly larger zone than the button itself
+    document.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const nearby =
+        e.clientX > rect.left - RADIUS && e.clientX < rect.right + RADIUS &&
+        e.clientY > rect.top - RADIUS && e.clientY < rect.bottom + RADIUS;
+      if (nearby) onMove(e);
+      else if (btn.classList.contains('is-tracking')) reset();
+    });
+
+    btn.addEventListener('mouseleave', reset);
+  });
+})();
