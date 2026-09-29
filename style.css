@@ -2035,3 +2035,39 @@ body.dark .social-badge {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* 3D tilt cards (class is added by JS on desktop only) */
+.tilt {
+  position: relative;
+  will-change: transform;
+}
+
+.project-card.tilt:hover,
+.certificate-card.tilt:hover {
+  transform: perspective(900px)
+             rotateX(var(--rx, 0deg))
+             rotateY(var(--ry, 0deg))
+             translateY(-5px);
+  /* fast transform so it tracks the cursor; shadow keeps its smooth fade */
+  transition: transform 0.1s ease-out, box-shadow 0.3s ease;
+}
+
+/* Soft light spot that follows the cursor */
+.tilt::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at var(--mx, 50%) var(--my, 50%),
+    rgba(255, 255, 255, 0.22),
+    transparent 55%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.tilt:hover::after {
+  opacity: 1;
+}
