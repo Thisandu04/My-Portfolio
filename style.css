@@ -538,7 +538,17 @@ body.dark .info-card {
   top: 0;
   bottom: 0;
   width: 2px;
+  background-color: rgba(0, 122, 204, 0.15); /* faint static track */
+}
+
+.timeline-progress {
+  position: absolute;
+  left: 1rem;
+  top: 0;
+  width: 2px;
+  height: 0%;
   background-color: var(--color-primary);
+  transition: height 0.1s linear;
 }
 
 .timeline-item {
@@ -555,8 +565,15 @@ body.dark .info-card {
   top: 0.5rem;
   width: 1rem;
   height: 1rem;
-  background-color: var(--color-primary);
+  background-color: var(--border-color); /* dim until the line reaches it */
   border-radius: 50%;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.timeline-item.timeline-active::before {
+  background-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(0, 122, 204, 0.15);
+  transform: scale(1.15);
 }
 
 .timeline-date {
@@ -1053,38 +1070,6 @@ body.dark .badge-meta .badge-id {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
-}
-
-/* ============================================================
-   STAGGERED GRID REVEALS — projects, blog, certificates, badges
-   ============================================================ */
-@keyframes cardPopIn {
-  0% {
-    opacity: 0;
-    transform: translateY(35px) scale(0.94);
-  }
-  70% {
-    transform: translateY(-4px) scale(1.02);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.project-card,
-.blog-card,
-.certificate-card,
-.badge-card {
-  opacity: 0;
-  transform: translateY(35px) scale(0.94);
-}
-
-.project-card.reveal-visible,
-.blog-card.reveal-visible,
-.certificate-card.reveal-visible,
-.badge-card.reveal-visible {
-  animation: cardPopIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
 @keyframes iconFloat {

@@ -409,3 +409,34 @@ staggerReveal('.projects-grid', '.project-card');
 staggerReveal('.blog-grid', '.blog-card');
 staggerReveal('.certificates-grid', '.certificate-card');
 staggerReveal('.badges-grid', '.badge-card');
+
+// Animated timeline line — fills as you scroll through Education, lights up each dot as it's reached
+(function () {
+  const timeline = document.querySelector('.timeline');
+  if (!timeline) return;
+
+  const progressLine = document.createElement('div');
+  progressLine.className = 'timeline-progress';
+  timeline.prepend(progressLine);
+
+  const items = timeline.querySelectorAll('.timeline-item');
+
+  function updateProgress() {
+    const rect = timeline.getBoundingClientRect();
+    const triggerPoint = window.innerHeight * 0.75; // a natural "reading line" 3/4 down the screen
+
+    const traveled = triggerPoint - rect.top;
+    const pct = Math.min(Math.max((traveled / rect.height) * 100, 0), 100);
+    progressLine.style.height = `${pct}%`;
+
+    items.forEach((item) => {
+      const itemTop = item.getBoundingClientRect().top - rect.top;
+      const itemPct = (itemTop / rect.height) * 100;
+      item.classList.toggle('timeline-active', pct >= itemPct);
+    });
+  }
+
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  window.addEventListener('resize', updateProgress);
+  updateProgress(); // correct state on load if page opens mid-scroll
+})();
