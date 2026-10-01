@@ -440,3 +440,27 @@ staggerReveal('.badges-grid', '.badge-card');
   window.addEventListener('resize', updateProgress);
   updateProgress(); // correct state on load if page opens mid-scroll
 })();
+
+// Header shrink-on-scroll
+(function () {
+  const header = document.querySelector('.site-header');
+  if (!header) return;
+
+  const hero = document.querySelector('.hero');
+  const SHRINK_AT = hero ? hero.offsetHeight - 80 : 60;
+  let ticking = false;
+
+  function updateHeader() {
+    header.classList.toggle('scrolled', window.scrollY > SHRINK_AT);
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(updateHeader);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  updateHeader(); // correct state if page loads already scrolled down
+})();
