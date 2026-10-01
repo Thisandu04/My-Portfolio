@@ -1055,6 +1055,38 @@ body.dark .badge-meta .badge-id {
   }
 }
 
+/* ============================================================
+   STAGGERED GRID REVEALS — projects, blog, certificates, badges
+   ============================================================ */
+@keyframes cardPopIn {
+  0% {
+    opacity: 0;
+    transform: translateY(35px) scale(0.94);
+  }
+  70% {
+    transform: translateY(-4px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.project-card,
+.blog-card,
+.certificate-card,
+.badge-card {
+  opacity: 0;
+  transform: translateY(35px) scale(0.94);
+}
+
+.project-card.reveal-visible,
+.blog-card.reveal-visible,
+.certificate-card.reveal-visible,
+.badge-card.reveal-visible {
+  animation: cardPopIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
 @keyframes iconFloat {
   0%, 100% { transform: translateY(0px); }
   50%       { transform: translateY(-6px); }
