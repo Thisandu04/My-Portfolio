@@ -382,3 +382,30 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
   sections.forEach((section) => spyObserver.observe(section));
 })();
+
+// ── Generic staggered grid reveal (projects, blog, certificates, badges) ──
+function staggerReveal(gridSelector, itemSelector, delayStep = 100) {
+  const grid = document.querySelector(gridSelector);
+  if (!grid) return;
+
+  const gridObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const items = entry.target.querySelectorAll(itemSelector);
+        items.forEach((item, i) => {
+          setTimeout(() => {
+            item.classList.add('reveal-visible');
+          }, (i % 6) * delayStep); // resets every 6 items so large grids don't take forever
+        });
+        gridObserver.unobserve(entry.target); // fire only once
+      }
+    });
+  }, { threshold: 0.1 });
+
+  gridObserver.observe(grid);
+}
+
+staggerReveal('.projects-grid', '.project-card');
+staggerReveal('.blog-grid', '.blog-card');
+staggerReveal('.certificates-grid', '.certificate-card');
+staggerReveal('.badges-grid', '.badge-card');
