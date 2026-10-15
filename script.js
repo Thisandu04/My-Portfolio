@@ -65,8 +65,7 @@ const skillObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.15 });
 
-const skillsGrid = document.querySelector('.skills-grid');
-if (skillsGrid) skillObserver.observe(skillsGrid);
+document.querySelectorAll('.skills-grid').forEach((grid) => skillObserver.observe(grid));
 
 
 // Scroll up arrow functionality
