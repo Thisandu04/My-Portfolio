@@ -464,3 +464,52 @@ staggerReveal('.badges-grid', '.badge-card');
 
   updateHeader(); // correct state if page loads already scrolled down
 })();
+
+// Project filter tabs (built from each card's data-category)
+(function () {
+  const bar = document.getElementById('projectFilters');
+  const cards = document.querySelectorAll('.projects-grid .project-card[data-category]');
+  if (!bar || !cards.length) return;
+
+  const LABELS = { web: 'Web', 'ai-ml': 'AI / ML', data: 'Data' };
+  const MIN_CATEGORIES = 2; // bar stays hidden until there's something to filter
+
+  const split = (card) => card.dataset.category.split(/\s+/);
+  const categories = [...new Set([...cards].flatMap(split))];
+  if (categories.length < MIN_CATEGORIES) return;
+
+  ['all', ...categories].forEach((key) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'filter-btn' + (key === 'all' ? ' active' : '');
+    btn.dataset.filter = key;
+    btn.setAttribute('aria-pressed', key === 'all');
+    btn.textContent = key === 'all' ? 'All' : (LABELS[key] || key);
+    bar.appendChild(btn);
+  });
+  bar.hidden = false;
+
+  bar.addEventListener('click', (e) => {
+    const btn = e.target.closest('.filter-btn');
+    if (!btn) return;
+    const key = btn.dataset.filter;
+
+    bar.querySelectorAll('.filter-btn').forEach((b) => {
+      b.classList.toggle('active', b === btn);
+      b.setAttribute('aria-pressed', b === btn);
+    });
+
+    let shown = 0;
+    cards.forEach((card) => {
+      const match = key === 'all' || split(card).includes(key);
+      card.hidden = !match;
+      if (match) {
+        // replay the pop-in animation from the staggered reveal step
+        card.classList.remove('reveal-visible');
+        void card.offsetWidth;
+        setTimeout(() => card.classList.add('reveal-visible'), shown * 80);
+        shown++;
+      }
+    });
+  });
+})();
