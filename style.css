@@ -1144,6 +1144,58 @@ body.dark .badge-meta .badge-id {
   text-align: center;
 }
 
+.skills-tiers {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.skill-tier {
+  --tier-color: var(--color-primary);
+  border-left: 3px solid var(--tier-color);
+  padding-left: 1.5rem;
+}
+
+.tier-proficient { --tier-color: #00ab6c; }
+.tier-familiar   { --tier-color: var(--color-primary); }
+.tier-learning   { --tier-color: #fd7e14; }
+
+.tier-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.tier-header h3 {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.tier-header h3::before {
+  content: '';
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: var(--tier-color);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--tier-color) 20%, transparent);
+}
+
+.tier-header p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 480px) {
+  .skill-tier {
+    padding-left: 1rem;
+  }
+}
+
 .skill-item {
   display: flex;
   flex-direction: column;
