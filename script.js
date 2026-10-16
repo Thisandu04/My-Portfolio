@@ -16,19 +16,31 @@ if (savedTheme === 'dark') {
   themeToggle.textContent = '☀️';
 }
 
-// Mobile menu toggle
+// Mobile menu — slide-in panel
 const menuToggle = document.getElementById('menuToggle');
 const navMenu = document.getElementById('navMenu');
+const navOverlay = document.getElementById('navOverlay');
 
-menuToggle.addEventListener('click', () => {
-  navMenu.classList.toggle('active');
-});
+function setMenu(open) {
+  navMenu.classList.toggle('active', open);
+  navOverlay.classList.toggle('active', open);
+  menuToggle.classList.toggle('open', open);
+  menuToggle.textContent = open ? '✕' : '☰';
+  menuToggle.setAttribute('aria-expanded', String(open));
+  menuToggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+  document.body.classList.toggle('nav-open', open);
+}
 
-// Close mobile menu when clicking a link
+menuToggle.addEventListener('click', () => setMenu(!navMenu.classList.contains('active')));
+navOverlay.addEventListener('click', () => setMenu(false));
 navMenu.addEventListener('click', (e) => {
-  if (e.target.tagName === 'A') {
-    navMenu.classList.remove('active');
-  }
+  if (e.target.tagName === 'A') setMenu(false);
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') setMenu(false);
+});
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 768) setMenu(false); // reset if rotated or resized to desktop
 });
 
 // Intersection Observer for fade-in animations
